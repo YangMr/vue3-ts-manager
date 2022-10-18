@@ -1,11 +1,16 @@
 <template>
-  <div>header</div>
+  <Collapse></Collapse>
 </template>
 
-<script setup lang="ts">
-
+<script lang="ts" setup>
+import Collapse from "./Collapse.vue"
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.icons {
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
 
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside class="aside" width="200px">
+    <el-aside class="aside" width="auto">
       <app-aside></app-aside>
     </el-aside>
     <el-container>
@@ -24,13 +24,16 @@ import AppMain from "@/layout/AppMain/index.vue"
 <style lang="scss" scoped>
 .el-container {
   height: 100%;
-  
+
   .aside {
     background-color: #304156;
   }
 
   .header {
-    background-color: chocolate;
+    height: 50px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    align-items: center;
   }
 
   .main {
