@@ -1,6 +1,7 @@
 <template>
   <el-menu
-      :collapse="true"
+      :collapse="isCollapse"
+      :collapse-transition="true"
       :default-active="$route.path"
       active-text-color="#ffd04b"
       background-color="#304156"
@@ -14,12 +15,22 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive} from "vue"
+import {reactive, computed} from "vue"
 import {useRouter} from "vue-router"
+import {useStore} from "@/store"
 import MenuItem from "./MenuItem.vue"
 // import dynamicMenu from "@/utils/dynamic-menu"
 
+// 初始化router
 const router = useRouter()
+
+//初始化store
+const store = useStore()
+
+// 使用computed保存状态
+const isCollapse = computed(() => {
+  return store.getters.getMenuStatus
+})
 
 // 定义菜单数据
 const menuList = reactive([
@@ -132,5 +143,6 @@ const menuList = reactive([
 :deep(.el-menu-item:hover) {
   background-color: #001528 !important;
 }
+
 
 </style>
