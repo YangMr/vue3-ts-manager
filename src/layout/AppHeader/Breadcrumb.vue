@@ -15,7 +15,6 @@ import {ref, Ref, watch} from "vue"
 import {useRoute, RouteLocationMatched} from "vue-router"
 
 const route = useRoute()
-console.log('route', route)
 
 let breadcrumbList: Ref<RouteLocationMatched[]> = ref([])
 
