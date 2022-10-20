@@ -30,12 +30,12 @@ const store = useStore()
 const router = useRouter()
 const route = useRoute()
 
+
 watch(() => route.path, () => {
   const tagsItem = {
     title: route.meta.title,
     path: route.path
   }
-  console.log(tagsItem)
   store.commit("setTags", tagsItem)
 }, {
   deep: true,
