@@ -1,5 +1,6 @@
 import axios, {AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios'
 import {ElMessage} from 'element-plus'
+
 // 数据返回的接口
 // 定义请求响应参数，不含data
 interface Result {
@@ -12,12 +13,12 @@ interface ResultData<T = any> extends Result {
     data?: T;
 }
 
-const URL: string = ''
+const URL: string = '/dev-api'
 
 enum RequestEnums {
     TIMEOUT = 20000,
     OVERDUE = 600, // 登录失效
-    FAIL = 999, // 请求失败
+    FAIL = 500, // 请求失败
     SUCCESS = 200, // 请求成功
 }
 
@@ -46,12 +47,7 @@ class RequestHttp {
         this.service.interceptors.request.use(
             (config: AxiosRequestConfig) => {
                 const token = localStorage.getItem('token') || '';
-                return {
-                    ...config,
-                    headers: {
-                        'x-access-token': token, // 请求头中携带token信息
-                    }
-                }
+                return config
             },
             (error: AxiosError) => {
                 // 请求报错
@@ -113,8 +109,8 @@ class RequestHttp {
         return this.service.get(url, {params});
     }
 
-    post<T>(url: string, params?: object): Promise<ResultData<T>> {
-        return this.service.post(url, params);
+    post<T>(url: string, params?: object, options?: object): Promise<ResultData<T>> {
+        return this.service.post(url, params, options)
     }
 
     put<T>(url: string, params?: object): Promise<ResultData<T>> {
@@ -124,31 +120,12 @@ class RequestHttp {
     delete<T>(url: string, params?: object): Promise<ResultData<T>> {
         return this.service.delete(url, {params});
     }
+
+    request<T>(options: object): Promise<ResultData<T>> {
+        return this.service(options);
+    }
 }
 
 // 导出一个实例对象
 export default new RequestHttp(config);
 
-
-// import axios from "axios"
-//
-// const service = axios.create({
-//     baseURL: '',
-//     timeout: 10000
-// })
-//
-// // 请求拦截
-// service.interceptors.request.use(config => {
-//     return config
-// }, error => {
-//     Promise.reject(error)
-// })
-//
-// // 响应拦截
-// service.interceptors.response.use(response => {
-//     return response
-// }, error => {
-//     Promise.reject(error)
-// })
-//
-// export default service

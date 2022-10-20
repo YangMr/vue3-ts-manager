@@ -19,7 +19,7 @@
             <el-input v-model="loginModel.code" placeholder="请输入验证码"/>
           </el-col>
           <el-col :span="6" class="cancel">
-            <el-input placeholder="请输入验证码"/>
+            <img :src="imgUrl" alt="验证码" class="captureImage" @click="handleGetCapture">
           </el-col>
         </el-row>
       </el-form-item>
@@ -39,43 +39,13 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref, getCurrentInstance} from 'vue'
-import type {FormInstance, FormRules, ElForm} from 'element-plus'
+import useBaseLogin from "@/composables/login/useBaseLogin"
+import useLogin from "@/composables/login/useLogin"
 
-const {proxy} = getCurrentInstance() as any;
 
-const loginFormRef = ref<InstanceType<typeof ElForm>>();
+const {formSize, loginFormRef, loginModel, rules} = useBaseLogin()
+const {handleSubmit, handleGetCapture, imgUrl} = useLogin(loginModel)
 
-// 定义表单大小
-const formSize = ref('large')
-
-// do not use same name with ref
-const loginModel = reactive({
-  username: '',
-  password: '',
-  code: ''
-})
-
-// 定义校验规则
-const rules = reactive<FormRules>({
-  username: [
-    {required: true, message: '请填写登录账户', trigger: 'blur'},
-  ],
-  password: [
-    {required: true, message: '请填写登录密码', trigger: 'blur'},
-  ],
-  code: [
-    {required: true, message: '请填写验证码', trigger: 'blur'},
-  ]
-})
-
-const handleSubmit = () => {
-  proxy.$refs.loginFormRef.validate((valid: boolean) => {
-    if (valid) {
-      console.log('submit!')
-    }
-  })
-}
 </script>
 
 <style lang="scss" scoped>
@@ -127,6 +97,13 @@ const handleSubmit = () => {
 
     .cancel {
       padding-right: 0 !important;
+    }
+
+    .captureImage {
+      width: 100%;
+      position: relative;
+      top: 2px;
+      height: 40px;
     }
   }
 }

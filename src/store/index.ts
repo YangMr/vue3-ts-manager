@@ -12,39 +12,23 @@ export const key: InjectionKey<Store<State>> = Symbol()
 
 export const store = createStore<State>({
     state: {
-        count: 0,
+        token: "",
         menuStatus: false,
         tags: [
             {
                 title: '首页',
                 path: '/dashboard'
             }
-            // {
-            //     title: '机构管理',
-            //     path: '/system/department'
-            // },
-            // {
-            //     title: '用户管理',
-            //     path: '/system/userList'
-            // },
-            // {
-            //     title: '角色管理',
-            //     path: '/system/roleList'
-            // },
-            // {
-            //     title: '权限管理',
-            //     path: '/system/menuList'
-            // }
         ]
     },
     mutations: {
-        setCount(state: State, count: number): void {
-            state.count = count
+        setToken(state: State, token: string) {
+            state.token = token
         },
         setMenuStatus(state: State, status: boolean): void {
             state.menuStatus = status
         },
-        setTags(state: State, tags: any[]): void {
+        setTags(state: State, tags: object): void {
             const index = state.tags.findIndex((item: any) => item.path === tags.path)
             if (index !== -1) return
             state.tags.push(tags)
@@ -61,8 +45,8 @@ export const store = createStore<State>({
         }
     },
     getters: {
-        getCount(state: State): number {
-            return state.count
+        getToken(state: State) {
+            return state.token
         },
         getMenuStatus(state: State): boolean {
             return state.menuStatus
